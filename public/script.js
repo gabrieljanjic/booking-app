@@ -352,7 +352,30 @@ const getExactPost = function (id) {
       modal._element.addEventListener('hidden.bs.modal', function () {
         this.remove();
       });
+
+      const hotelLatLng = { lat: data.data.lat, lng: data.data.lng };
+
       modal._element.addEventListener('shown.bs.modal', function () {
+        fetch(`/get-all-hotel-rezevations/${id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(res => res.json())
+          .then(reservationData => {
+            if (reservationData.status === 'success') {
+              const disabledDates = getDisabledDates(reservationData.reservations);
+              initializeCalendar(disabledDates, reservationData.reservations);
+            } else {
+              initializeCalendar([], []);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            initializeCalendar([]);
+          });
+
         waitForGoogleMaps().then(() => {
           if (window.google && window.google.maps) {
             const map = new google.maps.Map(document.getElementById('hotel-map'), {
@@ -363,7 +386,7 @@ const getExactPost = function (id) {
             const marker = new google.maps.marker.AdvancedMarkerElement({
               map: map,
               position: hotelLatLng,
-              title: rezervationData.hotelId.name,
+              title: data.data.name,
             });
           } else {
             console.error('Google Maps nije učitan');
@@ -371,6 +394,7 @@ const getExactPost = function (id) {
           }
         });
       });
+
       modal.show();
     })
     .catch(err => {
