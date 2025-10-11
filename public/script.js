@@ -651,18 +651,26 @@ const initializeCalendar = function (disabledDates) {
   flatpickr('#rezervation-date', {
     mode: 'range',
     minDate: 'today',
-    dateFormat: 'Y-m-d',
+    dateFormat: 'd.m.Y',
+    locale: 'hr',
     disable: disabledDates,
+
+    // Bolji prikaz
+    static: true,
+    monthSelectorType: 'static',
+
     onChange: function (selectedDates, dateStr, instance) {
-      console.log('Odabrani datumi:', dateStr);
+      console.log('✅ Odabrani datumi:', dateStr);
     },
+
     onDayCreate: function (dObj, dStr, fp, dayElem) {
       const date = dayElem.dateObj.toISOString().split('T')[0];
 
       if (disabledDates.includes(date)) {
-        dayElem.style.color = '#000';
-        dayElem.style.pointerEvents = 'none';
-        dayElem.style.opacity = '0.3';
+        dayElem.classList.add('disabled-date');
+        dayElem.style.textDecoration = 'line-through';
+        dayElem.style.opacity = '0.4';
+        dayElem.style.cursor = 'not-allowed';
         dayElem.title = 'Zauzeto';
       }
     },
