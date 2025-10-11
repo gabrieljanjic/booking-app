@@ -133,7 +133,7 @@ exports.createHotel = async (req, res) => {
     const street = req.body.street;
     const address = `${city}, ${street}`;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${
-      process.env.GOOGLE_API_KEY
+      process.env.GOOGLE_MAPS_API_KEY
     }`;
 
     const response = await fetch(url);
