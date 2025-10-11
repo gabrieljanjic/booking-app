@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking</title>
+    <link rel="icon" type="image/png" href="./data/hotel.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+  </head>
+  <body>
+    <!-- NAV -->
+    <div class="div-nav shadow px-3">
+      <nav class="w-full d-flex flex-row justify-content-between align-items-center">
+        <h4 class="m-0 p-0">BookingApp</h4>
+        <ul class="nav d-flex flex-row justify-content-center">
+          <li class="nav-item">
+            <p id="accommodation" style="cursor: pointer" class="nav-link py-0 my-0 active-nav-link text-muted">
+              Smještaj
+            </p>
+          </li>
+          <li class="nav-item">
+            <p id="about-us" style="cursor: pointer" class="nav-link py-0 my-0 text-muted">O nama</p>
+          </li>
+          <li class="nav-item">
+            <p id="add-hotel" style="cursor: pointer" class="nav-link py-0 my-0 text-muted">Dodaj Hotel</p>
+          </li>
+          <li class="nav-item">
+            <p id="my-rezervations" style="cursor: pointer" class="nav-link py-0 my-0 text-muted">Moje rezervacije</p>
+          </li>
+        </ul>
+        <div class="d-flex gap-2" id="all-nav-buttons">
+          <button type="button" class="btn" id="login" data-bs-toggle="modal" data-bs-target="#loginUserModal">
+            Prijava
+          </button>
+          <button
+            type="button"
+            class="blue-white"
+            id="register"
+            data-bs-toggle="modal"
+            data-bs-target="#createUserModal"
+          >
+            Registracija
+          </button>
+        </div>
+        <div id="user-nav" class="d-flex flex-row justify-content-center align-items-center gap-1 d-none">
+          <div class="circle">
+            <i class="las la-user"></i>
+          </div>
+          <div class="d-flex flex-row justify-content-center align-items-center gap-1 me-4">
+            <p id="user-nav-name" class="p-0 m-0"></p>
+            <p id="user-nav-surname" class="p-0 m-0"></p>
+          </div>
+          <button class="btn" style="border: 1px solid red; color: red" id="logout">Odjava</button>
+        </div>
+      </nav>
+    </div>
+    <!---->
+    <main class="pt-4">
+      <section id="main-section">
+        <div
+          id="filters"
+          class="p-4 bg-white rounded-3 shadow d-flex flex-column justify-content-center align-items-center"
+        >
+          <div class="mb-3">
+            <h2 class="fw-bolder text-dark">Pronađite savršen smještaj</h2>
+          </div>
+          <div class="row col-12">
+            <label for="destination" class="col-3 form-label">Odredište</label>
+          </div>
+          <div class="row col-12">
+            <div class="col-9">
+              <input type="text" id="destination" class="form-control" />
+            </div>
+            <div class="col-3">
+              <button class="btn bg-danger text-white w-100" id="search">Pretraži</button>
+            </div>
+          </div>
+        </div>
+        <div id="filters-and-tours" class="mt-4">
+          <aside class="p-4 bg-white rounded-3 shadow h-auto">
+            <div>
+              <h5 class="mb-0">Filtri</h5>
+              <hr class="my-2" />
+              <p class="pt-0 pb-1 m-0 fw-bold">Cijena po noći</p>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="0-50" name="price" />
+                <p class="m-0">Do 50€</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="51-100" name="price" />
+                <p class="m-0">50€ - 100€</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="101-200" name="price" />
+                <p class="m-0">100€ - 200€</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="200-more" name="price" />
+                <p class="m-0">Više od 200€</p>
+              </div>
+              <hr class="my-2" />
+              <p class="pb-1 m-0 fw-bold">Tip Smještaja</p>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="hotel" id="hotel-filter" name="type-filter"/>
+                <p class="m-0">Hotel</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="apartman" id="apartman-filter" name="type-filter"/>
+                <p class="m-0">Apartman</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" value="hostel" id="hostel-filter" name="type-filter"/>
+                <p class="m-0">Hostel</p>
+              </div>
+              <hr class="my-2" />
+              <p class="pb-1 m-0 fw-bold">Pogodnosti</p>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="breakfast"/>
+                <p class="m-0">Doručak</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="parking"/>
+                <p class="m-0">Parkiralište</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="wiFi"/>
+                <p class="m-0">WiFi</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="klima"/>
+                <p class="m-0">Klima-uređaj</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="cleaning"/>
+                <p class="m-0">Svakodnevno čišćenje</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="familyRoom"/>
+                <p class="m-0">Obiteljske sobe</p>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <input type="checkbox" name="benefits" value="smoking"/>
+                <p class="m-0">Soba za nepušače</p>
+              </div>
+            </div>
+          </aside>
+          <section id="all-hotels" class="w-full px-3 py-1 d-flex flex-column gap-3"></section>
+        </div>
+      </section>
+      <section id="about-us-section" class="d-none">
+        <div class="w-full d-flex flex-column gap-4" id="about-us-div">
+          <div class="p-4 d-flex flex-column justify-content-center bg-white border-muted rounded-3 shadow">
+            <h3 class="text-primary fw-bold text-center mb-2">O nama</h3>
+            <p class="text-center text-muted mb-1" style="font-size: 1rem;">Vaš pouzdani partner za nezaboravne putovanja</p>
+            <p class="text-center mb-0" style="font-size: 1rem;">Dobrodošli u naš svijet gostoprimstva! Mi smo tim strastvenih profesionalaca koji vjeruje da svako putovanje treba biti posebno iskustvo.</p>
+            <p class="text-center" style="font-size: 1rem;">S godinama iskustva u hotelijerstvu, pružamo vrhunsku uslugu i nezaboravne trenutke našim gostima.</p>
+          </div>
+          <div class="d-flex flex-row gap-4">
+            <div class="p-4 d-flex flex-column bg-white border-muted rounded-3 shadow w-50">
+              <h4 class="text-primary fw-bold mb-3">Naša misija</h4>
+              <p style="font-size: 1rem;">Naša misija je pružiti gostima izuzetno iskustvo boravka kroz personalizirane usluge, vrhunski komfor i neponovljive trenutke. Težimo stvaranju atmosfere gdje se svaki gost osjeća dobrodošlo i cijenjeno.</p>
+              <p style="font-size: 1rem;">Kroz inovativne pristupe i pažljivo odabrane sadržaje, gradimo mostove između kultura i stvaramo uspomene koje traju cijeli život.</p>
+            </div>
+            <div class="p-4 d-flex flex-column bg-white border-muted rounded-3 shadow w-50">
+              <h4 class="text-primary fw-bold mb-3">Naša vizija</h4>
+              <p style="font-size: 1rem;">Vizija nam je postati prepoznatljiv brend koji simbolizira kvalitetu, pouzdanost i inovacije u hotelijerskoj industriji. Želimo biti prva opcija za putnike koji traže autentično iskustvo.</p>
+              <p style="font-size: 1rem;">Težimo kontinuiranom razvoju naših usluga i stvaranju novih standarda izvrsnosti koji će inspirirati cijelu industriju.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="add-hotel-section" class="d-none">
+        <div id="add-hotel-div" class="p-4 d-flex flex-column bg-white border-muted rounded-3 shadow" style="max-width:50rem; margin:0 auto">
+          <h1 class="fs-4 text-center">Dodajte hotel</h1>
+          <label for="name" class="form-label mb-1">Ime:</label>
+          <input type="text" id="name" class="form-control mb-1" />
+          <label for="type" class="form-label mb-1">Tip:</label>
+          <input type="text" id="type" class="form-control mb-1" />
+          <label for="street" class="form-label mb-1">Ulica:</label>
+          <input type="text" id="street" class="form-control mb-1" />
+          <label for="place" class="form-label mb-1">Mjesto:</label>
+          <input type="text" id="place" class="form-control mb-1" />
+          <label for="description" class="form-label mb-1">Opis:</label>
+          <input type="text" id="description" class="form-control mb-1" />
+          <label for="image" class="form-label mb-1">Slika:</label>
+          <input type="text" id="image" class="form-control mb-1" />
+          <label for="price" class="form-label mb-1">Cijena po noći:</label>
+          <input type="text" id="price" class="mb-3 form-control mb-1" />
+          <div class="custom-grid">
+            <div class="d-flex gap-2">
+              <input type="checkbox" class="form-check-input" id="breakfast" />
+              <label for="breakfast" class="form-check-label text-nowrap">Doručak</label>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="checkbox" class="form-check-input" id="parking" />
+              <label for="parking" class="form-check-label text-nowrap">Parkiralište</label>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="checkbox" class="form-check-input" id="wi-fi" />
+              <label for="wi-fi" class="form-check-label text-nowrap">WiFi</label>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="checkbox" class="form-check-input" id="klima" />
+              <label for="klima" class="form-check-label text-nowrap">Klima-uređaj</label>
+            </div>
+            <div class="d-flex gap-2"> 
+              <input type="checkbox" class="form-check-input" id="cleaning" />
+              <label for="cleaning" class="form-check-label text-nowrap">Svakodnevno čišćenje</label>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="checkbox" class="form-check-input" id="family-room" />
+              <label for="family-room" class="form-check-label text-nowrap">Obiteljske sobe</label>
+            </div>
+            <div class="d-flex gap-2">
+              <input type="checkbox" class="form-check-input" id="smoking" />
+              <label for="smoking" class="form-check-label text-nowrap">Soba za nepušače</label>
+            </div>
+          </div>
+          <div class="mt-3 mx-auto">
+            <button type="button" id="create-hotel-btn" class="btn btn-primary">Spremi</button>
+            <button type="button" class="btn btn-secondary">Odustani</button>
+          </div>
+      </section>
+      <section id="my-rezervations-section" class="d-none">
+        <div class="w-full" id="my-rezervations-div">
+          <p>Moje rezervacije</p>
+        </div>
+      </section>
+    </main>
+    <!-- MODAL -> Login user-->
+    <div class="modal fade" id="loginUserModal" tabindex="-1" aria-labelledby="loginUserLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="loginUserLabel">Prijavite se</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <div class="d-flex flex-column">
+                <label for="login-username" class="form-label p-0 m-0">Koriničko ime:</label>
+                <input type="text" id="login-username" class="form-control mb-2" />
+                <label for="login-password" class="form-label p-0 m-0">Lozinka:</label>
+                <input type="password" id="login-password" class="form-control mb-2" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Odustani</button>
+            <button type="button" id="login-user-btn" class="btn btn-primary">Prijava</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -> Create user-->
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createUserLabel">Kreirajte račun</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <div class="d-flex flex-column">
+                <label for="user-name" class="form-label p-0 m-0">Ime:</label>
+                <input type="text" id="user-name" class="form-control mb-2" />
+                <label for="user-surname" class="form-label p-0 m-0">Prezime:</label>
+                <input type="text" id="user-surname" class="form-control mb-2" />
+                <label for="username" class="form-label p-0 m-0">Koriničko ime:</label>
+                <input type="text" id="username" class="form-control mb-2" />
+                <label for="password" class="form-label p-0 m-0">Lozinka:</label>
+                <input type="password" id="password" class="form-control mb-2" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Odustani</button>
+            <button type="button" id="create-user-btn" class="btn btn-primary">Spremi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/hr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
