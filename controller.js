@@ -195,10 +195,6 @@ exports.getExactPost = async (req, res) => {
 exports.getHotelReservations = async (req, res) => {
   const { id } = req.params;
 
-  console.log('=== DEBUG START ===');
-  console.log('Received ID:', id);
-  console.log('ID type:', typeof id);
-
   try {
     const allReservations = await Rezervation.find();
     const hotelObjectId = new mongoose.Types.ObjectId(id);
@@ -221,11 +217,13 @@ exports.setRezervation = async (req, res) => {
   try {
     const { hotelId, checkIn, checkOut } = req.body;
     console.log('User:', req.user.id);
+    const formattedCheckIn = checkIn.split('.').reverse().join('-');
+    const formattedCheckOut = checkOut.split('.').reverse().join('-');
     const newRezervation = await Rezervation.create({
       hotelId: hotelId,
       guestId: req.user.id,
-      checkIn: checkIn,
-      checkOut: checkOut,
+      checkIn: formattedCheckIn,
+      checkOut: formattedCheckOut,
     });
     console.log(newRezervation);
     res.status(201).json({
