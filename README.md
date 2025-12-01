@@ -1,6 +1,6 @@
 # Booking App
 
-A full-stack hotel booking application built with **Node.js**, **Express**, **MongoDB**, and a frontend using **HTML/CSS/JS**.  
+A full-stack hotel booking application built with **Node.js**, **Express**, **MongoDB**, and a frontend using **HTML/CSS/JS/BOOTSTRAP**.  
 Users can register, login, browse hotels, make reservations, and manage their bookings.
 
 ##  Live Demo
