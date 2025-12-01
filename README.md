@@ -3,6 +3,11 @@
 A full-stack hotel booking application built with **Node.js**, **Express**, **MongoDB**, and a frontend using **HTML/CSS/JS**.  
 Users can register, login, browse hotels, make reservations, and manage their bookings.
 
+##  Live Demo
+🔗 [Booking App Live](https://booking-app-bmps.onrender.com/)
+
+> ⚠️**Note:** Backend may take 30–50 seconds to wake up on the first request (free Render tier limitation).
+
 ---
 
 ## Features
